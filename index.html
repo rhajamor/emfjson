@@ -143,7 +143,7 @@ resource.<span class="fu">load</span>(options);</code></pre>
             <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;ecore:EReference&quot;</span>,
             <span class="st">&quot;name&quot;</span>: <span class="st">&quot;foos&quot;</span>,
             <span class="st">&quot;eType&quot;</span>: {
-                <span class="st">&quot;#ref&quot;</span>: <span class="st">&quot;/&quot;</span>
+                <span class="st">&quot;$ref&quot;</span>: <span class="st">&quot;//Foo&quot;</span>
             }
         }
     ]
@@ -224,22 +224,33 @@ resource.<span class="fu">load</span>(options);</code></pre>
     ]
 }</code></pre>
 <h3 id="inner-document-references">Inner document references</h3>
+<p>References are represented as a JSON object containing a key <code>$ref</code>. In the case of an inner document reference, the value of the key is the fragment identifier of the referenced object.</p>
 <p>Single value reference:</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">{
-    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>,
-    <span class="st">&quot;element&quot;</span>: {
-        <span class="st">&quot;#ref&quot;</span>: <span class="st">&quot;//foo.0/foo&quot;</span>
-    }
+    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;http://www.eclipselabs.org/emfjson/junit#//Node&quot;</span>,
+    <span class="st">&quot;label&quot;</span>: <span class="st">&quot;root&quot;</span>,
+    <span class="st">&quot;target&quot;</span>: {
+        <span class="st">&quot;$ref&quot;</span>: <span class="st">&quot;//@child.0&quot;</span>
+    },
+    <span class="st">&quot;child&quot;</span>: [
+        {
+            <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;http://www.eclipselabs.org/emfjson/junit#//Node&quot;</span>,
+            <span class="st">&quot;label&quot;</span>: <span class="st">&quot;n1&quot;</span>,
+            <span class="st">&quot;source&quot;</span> : {
+                <span class="st">&quot;$ref&quot;</span>: <span class="st">&quot;/&quot;</span>
+            }
+        }
+    ]
 }</code></pre>
-<p>Multi value reference:</p>
+<p>Multi value references are represented by JSON object in an array:</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">{
     <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>,
     <span class="st">&quot;element&quot;</span>: [
         {
-            <span class="st">&quot;#ref&quot;</span>: <span class="st">&quot;//foo.0/foo.1&quot;</span>
+            <span class="st">&quot;$ref&quot;</span>: <span class="st">&quot;//@foo.0/@foo.1&quot;</span>
         },
         {
-            <span class="st">&quot;#ref&quot;</span>: <span class="st">&quot;//foo.0/foo.2&quot;</span>
+            <span class="st">&quot;$ref&quot;</span>: <span class="st">&quot;//@foo.0/@foo.2&quot;</span>
         }
     ]
 }</code></pre>

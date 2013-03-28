@@ -27,7 +27,7 @@ This is a single element document.
             "eClass": "ecore:EReference",
             "name": "foos",
             "eType": {
-                "#ref": "/"
+                "$ref": "//Foo"
             }
         }
     ]
@@ -156,28 +156,41 @@ Multi value containment:
 
 ### Inner document references
 
+References are represented as a JSON object containing a key ```$ref```. In the case of an inner document reference, the value of
+the key is the fragment identifier of the referenced object.
+
 Single value reference:
 
 ```javascript
 {
-    "eClass": "...",
-    "element": {
-        "#ref": "//foo.0/foo"
-    }
+    "eClass": "http://www.eclipselabs.org/emfjson/junit#//Node",
+    "label": "root",
+    "target": {
+        "$ref": "//@child.0"
+    },
+    "child": [
+        {
+            "eClass": "http://www.eclipselabs.org/emfjson/junit#//Node",
+            "label": "n1",
+            "source" : {
+                "$ref": "/"
+            }
+        }
+    ]
 }
 ```
 
-Multi value reference:
+Multi value references are represented by JSON object in an array:
 
 ```javascript
 {
     "eClass": "...",
     "element": [
         {
-            "#ref": "//foo.0/foo.1"
+            "$ref": "//@foo.0/@foo.1"
         },
         {
-            "#ref": "//foo.0/foo.2"
+            "$ref": "//@foo.0/@foo.2"
         }
     ]
 }
