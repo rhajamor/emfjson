@@ -1,15 +1,264 @@
+<!DOCTYPE html>
 <html>
-  <body>
-    <p>EMFJs p2 repositories:</p>
-    <ul>
-	 <li>Release 0.3.0: <a href="http://ghillairet.github.com/emfjson/releases/0.3.0">http://ghillairet.github.com/emfjson/releases/0.3.0/</a></li>
-	 <li>Release 0.3.1: <a href="http://ghillairet.github.com/emfjson/releases/0.3.1">http://ghillairet.github.com/emfjson/releases/0.3.1/</a></li>
-	 <li>Release 0.3.2: <a href="http://ghillairet.github.com/emfjson/releases/0.3.2">http://ghillairet.github.com/emfjson/releases/0.3.2/</a></li>
-	 <li>Release 0.3.3: <a href="http://ghillairet.github.com/emfjson/releases/0.3.3">http://ghillairet.github.com/emfjson/releases/0.3.3/</a></li>
-    </ul>
-    <ul>
-    	<li>Snapshots: <a href="http://ghillairet.github.com/emfjson/snapshots">http://ghillairet.github.com/emfjson/snapshots/</a></li>
-    </ul>
-  </body>
-</html>
+    <head>
+        <title>emfjson - EMF Binding for JSON</title>
+        <link href="css/normalize.css" rel="stylesheet" media="screen" type='text/css'>
+        <link href="css/site.css" rel="stylesheet" media="screen" type='text/css'>
+    </head>
+    <body>
+        <nav id="menu">
+            <header>
+                <h1>{ emfjson }</h1>
+            </header>
+            <ul><li class="nav-divider"><a href="index.html">Home</a></li></ul>
+            <ul><li><a href="#about">About</a></li></ul>
+            <ul><li><a href="#installation">Installation</a></li></ul>
+            <ul><li><a href="#usage">Usage</a></li></ul>
+            <ul><li class="nav-divider"><a href="#specification">Specification</a></li></ul>
+            <ul><li><a href="https://github.com/ghillairet/emfjson-gwt" target="_blank">GWT edition</a></li></ul>
+            <ul><li><a href="https://github.com/ghillairet/emfjson" target="_blank">Source code</a></li></ul>
+            <ul><li><a href="https://github.com/ghillairet/emfjson/issues?state=open" target="_blank">Issues</a></li></ul>
+        </nav>
+        <div id="content">
+            <article>
 
+<section id="about">
+<h1 id="emf-binding-for-json">EMF Binding for JSON</h1>
+<p>JSON binding for <a href="http://www.eclipse.org/emf">EMF</a> (Eclipse Modeling Framework) models, that allows serialization and deserialization of EMF Resources in a specific <a href="http://www.json.org/">JSON</a> format.</p>
+<p>This is how a model looks like in JSON format.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;eClass&quot;</span> : <span class="st">&quot;http://www.eclipse.org/emf/2002/Ecore#//EPackage&quot;</span>,
+    <span class="st">&quot;name&quot;</span> : <span class="st">&quot;model&quot;</span>,
+    <span class="st">&quot;nsPrefix&quot;</span> : <span class="st">&quot;model&quot;</span>,
+    <span class="st">&quot;nsURI&quot;</span> : <span class="st">&quot;http://www.example.org/model&quot;</span>,
+    <span class="st">&quot;eClassifiers&quot;</span> : [
+        {
+            <span class="st">&quot;eClass&quot;</span> : <span class="st">&quot;http://www.eclipse.org/emf/2002/Ecore#//EClass&quot;</span>,
+            <span class="st">&quot;name&quot;</span> : <span class="st">&quot;Library&quot;</span>
+        }
+    ]
+}</code></pre>
+<h2 id="license">license</h2>
+<p>This software is distributed under the terms of the Eclipse Public License 1.0 - <a href="http://www.eclipse.org/legal/epl-v10.html">EPL</a>.</p>
+<h2 id="requirements">requirements</h2>
+<ul>
+<li>EMF 2.7.0</li>
+<li>Jackson 1.6.0 or later (not compatible with jackson &gt; 2.0.0)</li>
+</ul>
+</section>
+<section>
+<h1 id="installation">Installation</h1>
+<h2 id="update-site">Update Site</h2>
+<p>This update site contains latest version of emfjson and jackson 1.8.5.</p>
+<p><a href="http://ghillairet.github.com/p2">http://ghillairet.github.com/p2</a></p>
+<h2 id="maven-repository">Maven repository</h2>
+<p>A maven repository for emfjson is available, note that you should also include the denpendency and repository for jackson in your pom file. Please refer to the <a href="http://jackson.codehaus.org/">jackson</a> documentation for more information.</p>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;repository&gt;</span>
+    <span class="kw">&lt;id&gt;</span>emfjson-repository<span class="kw">&lt;/id&gt;</span>
+    <span class="kw">&lt;url&gt;</span>http://repository-ghillairet.forge.cloudbees.com/snapshot<span class="kw">&lt;/url&gt;</span>
+    <span class="kw">&lt;snapshots&gt;</span>
+        <span class="kw">&lt;enabled&gt;</span>true<span class="kw">&lt;/enabled&gt;</span>
+        <span class="kw">&lt;updatePolicy&gt;</span>always<span class="kw">&lt;/updatePolicy&gt;</span>
+    <span class="kw">&lt;/snapshots&gt;</span>
+<span class="kw">&lt;/repository&gt;</span>
+
+<span class="kw">&lt;dependency&gt;</span>
+    <span class="kw">&lt;groupId&gt;</span>org.eclipselabs<span class="kw">&lt;/groupId&gt;</span>
+    <span class="kw">&lt;artifactId&gt;</span>org.eclipselabs.emfjson<span class="kw">&lt;/artifactId&gt;</span>
+    <span class="kw">&lt;version&gt;</span>0.5.3-SNAPSHOT<span class="kw">&lt;/version&gt;</span>
+<span class="kw">&lt;/dependency&gt;</span></code></pre>
+<h2 id="from-source">From Source</h2>
+<p>You can install emfjson from source if you have Maven 3.0 by executing the following commands. This will generate a p2 repository in the build/repository/target folder.</p>
+<pre><code>git clone git://github.com/ghillairet/emfjson.git
+cd emfjson
+mvn clean install</code></pre>
+</section>
+<section>
+<h1 id="usage">Usage</h1>
+<p>This short tutorial shows how to use a JsResource to serialize, deserialize EMF models in JSON format. This requires that you are already familiar with the concept of Resource in EMF. Follow this tutorial if you are not familiar to <a href="http://www.vogella.de/articles/EclipseEMF/article.html">EMF</a>.</p>
+<h2 id="serialization">Serialization</h2>
+<p>To serialize objects in json using emfjson, simply register the json extension to the resource factroy registry, as follow:</p>
+<pre class="sourceCode java"><code class="sourceCode java">ResourceSet resourceSet = <span class="kw">new</span> <span class="fu">ResourceSetImpl</span>();
+Resource.<span class="fu">Factory</span>.<span class="fu">Registry</span>.<span class="fu">INSTANCE</span>.<span class="fu">getExtensionToFactoryMap</span>().<span class="fu">put</span>(<span class="st">&quot;json&quot;</span>, <span class="kw">new</span> <span class="fu">JsResourceFactoryImpl</span>());</code></pre>
+<p>Then create an object and add it to a resource. Give the resource a URI that will be path to the resulting json file.</p>
+<pre class="sourceCode java"><code class="sourceCode java">Resource resource = resourceSet.<span class="fu">createResource</span>(URI.<span class="fu">createURI</span>(<span class="st">&quot;model.json&quot;</span>));
+Map&lt;String, Object&gt; options = <span class="kw">new</span> HashMap&lt;String, Object&gt;();
+options.<span class="fu">put</span>(EMFJs.<span class="fu">OPTION_INDENT_OUTPUT</span>, <span class="kw">true</span>);
+options.<span class="fu">put</span>(EMFJs.<span class="fu">OPTION_SERIALIZE_TYPE</span>, <span class="kw">false</span>);
+
+LibraryShelf aShelf = LibraryFactory.<span class="fu">eINSTANCE</span>.<span class="fu">createLibraryShelf</span>();
+aShelf.<span class="fu">setName</span>(<span class="st">&quot;My Shelf&quot;</span>);
+
+Book aBook = LibraryFactory.<span class="fu">eINSTANCE</span>.<span class="fu">createBook</span>();
+aBook.<span class="fu">setTitle</span>(<span class="st">&quot;EMF: Eclipse Modeling Framework (2nd Edition)&quot;</span>);
+aBook.<span class="fu">setNumPages</span>(<span class="dv">739</span>);
+aShelf.<span class="fu">getItems</span>().<span class="fu">add</span>(aBook);
+
+resource.<span class="fu">getContents</span>().<span class="fu">add</span>(aShelf);
+resource.<span class="fu">save</span>(options);</code></pre>
+<p>The resulting file <code>model.json</code> will then contain the following JSON object:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+  <span class="st">&quot;name&quot;</span> : <span class="st">&quot;My Shelf&quot;</span>,
+  <span class="st">&quot;items&quot;</span> : [ {
+    <span class="st">&quot;title&quot;</span> : <span class="st">&quot;EMF: Eclipse Modeling Framework (2nd Edition)&quot;</span>,
+    <span class="st">&quot;numPages&quot;</span> : <span class="dv">739</span>
+  } ]
+}</code></pre>
+<p>Setting the option <code>OPTION_SERIALIZE_TYPE</code> to true will result in the following JSON:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+  <span class="st">&quot;eClass&quot;</span> : <span class="st">&quot;http://www.eclipselabs.org/examples/library#//LibraryShelf&quot;</span>,
+  <span class="st">&quot;name&quot;</span> : <span class="st">&quot;My Shelf&quot;</span>,
+  <span class="st">&quot;items&quot;</span> : [ {
+    <span class="st">&quot;eClass&quot;</span> : <span class="st">&quot;http://www.eclipselabs.org/examples/library#//Book&quot;</span>,
+    <span class="st">&quot;title&quot;</span> : <span class="st">&quot;EMF: Eclipse Modeling Framework (2nd Edition)&quot;</span>,
+    <span class="st">&quot;numPages&quot;</span> : <span class="dv">739</span>
+  } ]
+}</code></pre>
+<h2 id="deserialization">Deserialization</h2>
+<p>To load objects from json, you also need to register the correct resource factory, as previously described. You also need to indicate the type of the root objects you want to obtain from the json data. This is done via a Map.</p>
+<pre class="sourceCode java"><code class="sourceCode java">Map&lt;String, Object&gt; options = <span class="kw">new</span> HashMap&lt;String, Object&gt;();
+options.<span class="fu">put</span>(EMFJs.<span class="fu">OPTION_ROOT_ELEMENT</span>, ModelPackage.<span class="fu">eINSTANCE</span>.<span class="fu">getUser</span>());</code></pre>
+<p>Then load the EMF resource with those options.</p>
+<pre class="sourceCode java"><code class="sourceCode java">Resource resource = resourceSet.<span class="fu">createResource</span>(<span class="fu">uri</span>(<span class="st">&quot;file:/in.json&quot;</span>));
+resource.<span class="fu">load</span>(options);</code></pre>
+<p>The resource should now contain the objects.</p>
+<pre class="sourceCode java"><code class="sourceCode java">User user = (User)resource.<span class="fu">getContents</span>().<span class="fu">get</span>(<span class="dv">0</span>);</code></pre>
+</section>
+<section>
+<h1 id="specification">Specification</h1>
+<p>The EMF/JSON format specification presents the format use to represent EMF models in JSON. This format preserves the specifics of EMF, e.g. object fragment identifiers, inter and cross documents references.</p>
+<h2 id="json-document">JSON Document</h2>
+<p>A JSON document contains the description of a model. It can contain a single element or a collection of elements in the form of an array. Each JSON object contains the description of an EObject. The format use to represent an EObject is explained <a href="#eobject">later</a>.</p>
+<p>This is a single element document.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;ecore:EClass&quot;</span>,
+    <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Foo&quot;</span>,
+    <span class="st">&quot;eStructuralFeatures&quot;</span>: [
+        {
+            <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;ecore:EAttribute&quot;</span>,
+            <span class="st">&quot;name&quot;</span>: <span class="st">&quot;bar&quot;</span>,
+            <span class="st">&quot;eType&quot;</span>: <span class="st">&quot;ecore:EString&quot;</span>
+        },
+        {
+            <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;ecore:EReference&quot;</span>,
+            <span class="st">&quot;name&quot;</span>: <span class="st">&quot;foos&quot;</span>,
+            <span class="st">&quot;eType&quot;</span>: {
+                <span class="st">&quot;#ref&quot;</span>: <span class="st">&quot;/&quot;</span>
+            }
+        }
+    ]
+}</code></pre>
+<p>This is a multi elements document.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">[
+    {
+        <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>
+    },
+    {
+        <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>
+    }
+]</code></pre>
+<h2 id="namespaces">Namespaces</h2>
+<p>Namespaces can be used to avoid redundancy of declaring URIs and thus clarify the document and reduces it's size. Declaring namespaces is done via the property <code>@ns</code>. This property <strong>must</strong> have for value an object. This object will have for properties the <strong>prefixes</strong> and for values the <strong>URIs</strong> of the used namespaces. This is a map of the namespaces used in the document.</p>
+<p>In the case of a single element document, the key <code>@ns</code> must be a property of the root element.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    @<span class="dt">ns</span>: {
+        <span class="st">&quot;ecore&quot;</span>: <span class="st">&quot;http://www.eclipse.org/emf/2002/Ecore&quot;</span>,
+        <span class="st">&quot;user&quot;</span>: <span class="st">&quot;http://www.example.org/user&quot;</span>
+    },
+    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;ecore:EClass&quot;</span>,
+    <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Foo&quot;</span>
+}</code></pre>
+<p>In the case of a multi elements document, the key <code>@ns</code> must be specified in a JSON object at the root of the document, as shown below.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">[
+    {
+         @<span class="dt">ns</span>: {
+            <span class="st">&quot;ecore&quot;</span>: <span class="st">&quot;http://www.eclipse.org/emf/2002/Ecore&quot;</span>
+        }
+    },
+    {
+        <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;ecore:EClass&quot;</span>,
+        <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Foo&quot;</span>
+    },
+    {
+        <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;ecore:EClass&quot;</span>,
+        <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Bar&quot;</span>
+    }
+]</code></pre>
+<h2 id="eobject">EObject</h2>
+<p>EObject are represented in JSON in the form of JSON object. Each key of the JSON object represents a structural feature (EAttribute or EReference) of the EObject. The key of the object is the name of the structural feature. The associated value is the value of the structural feature. The value can be represented in the form of a string, number, boolean, object or array depending of the type of the feature.</p>
+<p>Each JSON object corresponding to an EObject can contain a special key named <strong>eClass</strong> that gives the type of the EObject in the form of a URI or prefixed value. The following excerpt presents the representation of an instance of EClass as JSON object.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;http://www.eclipse.org/emf/2002/Ecore#//EClass&quot;</span>,
+    <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Foo&quot;</span>
+}</code></pre>
+<h2 id="elist">EList</h2>
+<p>EList are represented in the form of JSON arrays. Each element of the array is a JSON object.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;ecore:EClass&quot;</span>,
+    <span class="st">&quot;eStructuralFeatures&quot;</span>: [
+        { ... },
+        { ... }
+    ]
+}</code></pre>
+<h2 id="eattributes">EAttributes</h2>
+<h2 id="ereferences">EReferences</h2>
+<p>EReferences represent links between EObjects. They can be containments or references. In both cases, they can link elements from the same document or link elements from different documents.</p>
+<h3 id="containments">Containments</h3>
+<p>Single value containment:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>,
+    <span class="st">&quot;element&quot;</span>: {
+        <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>
+    }
+}</code></pre>
+<p>Multi value containment:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>,
+    <span class="st">&quot;elements&quot;</span>: [
+        {
+            <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>
+        },
+        {
+            <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>
+        }
+    ]
+}</code></pre>
+<h3 id="inner-document-references">Inner document references</h3>
+<p>Single value reference:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>,
+    <span class="st">&quot;element&quot;</span>: {
+        <span class="st">&quot;#ref&quot;</span>: <span class="st">&quot;//foo.0/foo&quot;</span>
+    }
+}</code></pre>
+<p>Multi value reference:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;eClass&quot;</span>: <span class="st">&quot;...&quot;</span>,
+    <span class="st">&quot;element&quot;</span>: [
+        {
+            <span class="st">&quot;#ref&quot;</span>: <span class="st">&quot;//foo.0/foo.1&quot;</span>
+        },
+        {
+            <span class="st">&quot;#ref&quot;</span>: <span class="st">&quot;//foo.0/foo.2&quot;</span>
+        }
+    ]
+}</code></pre>
+<h3 id="cross-document-references">Cross document references</h3>
+<p>Single value reference:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;userId&quot;</span>: <span class="st">&quot;1&quot;</span>,
+    <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Paul&quot;</span>,
+    <span class="st">&quot;friends&quot;</span>: [
+        {
+            <span class="st">&quot;$ref&quot;</span> : <span class="st">&quot;platform:/plugin/org.eclipselabs.emfjson.junit/tests/test-proxy-2.json#2&quot;</span>
+        }
+    ],
+    <span class="st">&quot;uniqueFriend&quot;</span>: {
+        <span class="st">&quot;$ref&quot;</span> : <span class="st">&quot;platform:/plugin/org.eclipselabs.emfjson.junit/tests/test-proxy-2.json#3&quot;</span>
+    }
+}</code></pre>
+</section>
+</article>
+</div>
+</body>
+</html>
