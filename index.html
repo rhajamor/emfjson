@@ -2,9 +2,13 @@
 <html>
     <head>
         <title>emfjson - EMF Binding for JSON</title>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/normalize.css" rel="stylesheet" media="screen" type='text/css'>
+        <link type="text/css" rel="stylesheet" href="css/tomorrow-night.css">
+        <script type="text/javascript" src="highlight.pack.js"></script>
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
         <link href="css/site.css" rel="stylesheet" media="screen" type='text/css'>
-        <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Lekton|Ubuntu+Mono:400,700" rel="stylesheet">
     </head>
     <body>
         <nav id="menu">
@@ -202,6 +206,12 @@ resource.<span class="fu">load</span>(options);</code></pre>
     ]
 }</code></pre>
 <h2 id="eattributes">EAttributes</h2>
+<p>EAttributes are properties of EObjects and are mapped to JSON key values, where values are primitive types (string, number, boolean).</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">{
+    <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Joe&quot;</span>,
+    <span class="st">&quot;age&quot;</span>: <span class="dv">18</span>,
+    <span class="st">&quot;male&quot;</span>: <span class="kw">true</span>
+}</code></pre>
 <h2 id="ereferences">EReferences</h2>
 <p>EReferences represent links between EObjects. They can be containments or references. In both cases, they can link elements from the same document or link elements from different documents.</p>
 <h3 id="containments">Containments</h3>

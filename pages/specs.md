@@ -119,6 +119,15 @@ EList are represented in the form of JSON arrays. Each element of the array is a
 
 ## EAttributes
 
+EAttributes are properties of EObjects and are mapped to JSON key values, where values are primitive types (string, number, boolean).
+
+```javascript
+{
+    "name": "Joe",
+    "age": 18,
+    "male": true
+}
+```
 
 ## EReferences
 
