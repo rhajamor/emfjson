@@ -48,29 +48,25 @@
 <h2 id="requirements">requirements</h2>
 <ul>
 <li>EMF 2.7.0</li>
-<li>Jackson 1.6.0 or later (not compatible with jackson &gt; 2.0.0)</li>
+<li>Jackson 2.0.0 or later</li>
 </ul>
 </section>
 <section>
 <h1 id="installation">Installation</h1>
 <h2 id="update-site">Update Site</h2>
-<p>This update site contains latest version of emfjson and jackson 1.8.5.</p>
+<p>This update site contains latest version of emfjson and the Jackson JSON library.</p>
 <p><a href="http://ghillairet.github.com/p2">http://ghillairet.github.com/p2</a></p>
 <h2 id="maven-repository">Maven repository</h2>
 <p>A maven repository for emfjson is available, note that you should also include the denpendency and repository for jackson in your pom file. Please refer to the <a href="http://jackson.codehaus.org/">jackson</a> documentation for more information.</p>
 <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;repository&gt;</span>
     <span class="kw">&lt;id&gt;</span>emfjson-repository<span class="kw">&lt;/id&gt;</span>
     <span class="kw">&lt;url&gt;</span>http://repository-ghillairet.forge.cloudbees.com/snapshot<span class="kw">&lt;/url&gt;</span>
-    <span class="kw">&lt;snapshots&gt;</span>
-        <span class="kw">&lt;enabled&gt;</span>true<span class="kw">&lt;/enabled&gt;</span>
-        <span class="kw">&lt;updatePolicy&gt;</span>always<span class="kw">&lt;/updatePolicy&gt;</span>
-    <span class="kw">&lt;/snapshots&gt;</span>
 <span class="kw">&lt;/repository&gt;</span>
 
 <span class="kw">&lt;dependency&gt;</span>
     <span class="kw">&lt;groupId&gt;</span>org.eclipselabs<span class="kw">&lt;/groupId&gt;</span>
     <span class="kw">&lt;artifactId&gt;</span>org.eclipselabs.emfjson<span class="kw">&lt;/artifactId&gt;</span>
-    <span class="kw">&lt;version&gt;</span>0.5.3-SNAPSHOT<span class="kw">&lt;/version&gt;</span>
+    <span class="kw">&lt;version&gt;</span>0.7.0-SNAPSHOT<span class="kw">&lt;/version&gt;</span>
 <span class="kw">&lt;/dependency&gt;</span></code></pre>
 <h2 id="from-source">From Source</h2>
 <p>You can install emfjson from source if you have Maven 3.0 by executing the following commands. This will generate a p2 repository in the build/repository/target folder.</p>

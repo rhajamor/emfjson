@@ -3,7 +3,7 @@
 # Installation
 
 ## Update Site
-This update site contains latest version of emfjson and jackson 1.8.5.
+This update site contains latest version of emfjson and the Jackson JSON library.
 
 [http://ghillairet.github.com/p2](http://ghillairet.github.com/p2)
 
@@ -15,16 +15,12 @@ your pom file. Please refer to the [jackson](http://jackson.codehaus.org/) docum
 <repository>
 	<id>emfjson-repository</id>
 	<url>http://repository-ghillairet.forge.cloudbees.com/snapshot</url>
-	<snapshots>
-		<enabled>true</enabled>
-		<updatePolicy>always</updatePolicy>
-	</snapshots>
 </repository>
 
 <dependency>
 	<groupId>org.eclipselabs</groupId>
 	<artifactId>org.eclipselabs.emfjson</artifactId>
-	<version>0.5.3-SNAPSHOT</version>
+	<version>0.7.0-SNAPSHOT</version>
 </dependency>
 ```
 

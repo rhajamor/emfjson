@@ -29,6 +29,6 @@ This software is distributed under the terms of the Eclipse Public License 1.0 -
 ## requirements
 
 * EMF 2.7.0
-* Jackson 1.6.0 or later (not compatible with jackson > 2.0.0)
+* Jackson 2.0.0 or later
 
 </section>
