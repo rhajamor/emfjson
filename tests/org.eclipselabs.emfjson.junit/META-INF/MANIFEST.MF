@@ -6,22 +6,31 @@ Bundle-Version: 0.8.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Labs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipselabs.emfjson.junit,
- org.eclipselabs.emfjson.junit.model,
+Export-Package: org.eclipselabs.emfjson.junit.model,
  org.eclipselabs.emfjson.junit.model.impl,
  org.eclipselabs.emfjson.junit.model.util,
  org.eclipselabs.emfjson.junit.suite,
  org.eclipselabs.emfjson.junit.support,
  org.eclipselabs.emfjson.junit.tests
-Require-Bundle: org.eclipse.osgi,
- org.eclipse.emf.ecore,
- org.eclipselabs.emfjson,
- org.eclipse.emf.ecore.xmi,
- com.fasterxml.jackson.core.jackson-annotations,
- com.fasterxml.jackson.core.jackson-core,
- com.fasterxml.jackson.core.jackson-databind,
- org.junit
 Bundle-ActivationPolicy: lazy
-Import-Package: org.junit,
+Import-Package: com.fasterxml.jackson.databind,
+ com.fasterxml.jackson.databind.node,
+ org.eclipse.emf.common,
+ org.eclipse.emf.common.notify,
+ org.eclipse.emf.common.notify.impl,
+ org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.impl,
+ org.eclipse.emf.ecore.plugin,
+ org.eclipse.emf.ecore.resource,
+ org.eclipse.emf.ecore.resource.impl,
+ org.eclipse.emf.ecore.util,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.emf.ecore.xmi.impl,
+ org.eclipselabs.emfjson,
+ org.eclipselabs.emfjson.common,
+ org.eclipselabs.emfjson.map,
+ org.eclipselabs.emfjson.resource,
+ org.junit,
  org.junit.runner,
  org.junit.runners
