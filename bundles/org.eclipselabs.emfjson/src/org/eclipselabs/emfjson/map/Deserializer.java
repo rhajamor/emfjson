@@ -25,9 +25,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emfjson.common.Constants;
 import org.eclipselabs.emfjson.common.ModelUtil;
+import org.eclipselabs.emfjson.resource.UUIDResource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -76,8 +76,8 @@ class Deserializer {
 
 			if (useUUID && node.get(Constants.EJS_UUID_ANNOTATION) != null) {
 				String uuid = node.get(Constants.EJS_UUID_ANNOTATION).asText();
-				if (resource instanceof XMLResource) {
-					((XMLResource) resource).setID(eObject, uuid);
+				if (resource instanceof UUIDResource) {
+					((UUIDResource) resource).setID(eObject, uuid);
 				}
 			}
 
