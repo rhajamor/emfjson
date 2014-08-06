@@ -426,13 +426,13 @@ public class TestEmfJsAttributes extends TestSupport {
 		assertEquals(1, u1.getFriends().size());
 
 		User u2 = u1.getFriends().get(0);
-		assertTrue(u2.eIsProxy());
+		assertFalse(u2.eIsProxy());
 
 		assertEquals("2", u2.getUserId());
 		assertEquals("Pierre", u2.getName());
 
 		assertNotNull(u1.getUniqueFriend());
-		assertTrue(u1.getUniqueFriend().eIsProxy());
+		assertFalse(u1.getUniqueFriend().eIsProxy());
 
 		assertEquals("3", u1.getUniqueFriend().getUserId());
 		assertEquals("Paul", u1.getUniqueFriend().getName());
@@ -451,9 +451,9 @@ public class TestEmfJsAttributes extends TestSupport {
 		InternalEList<?> proxies = (InternalEList<?>) node.eGet(ModelPackage.Literals.NODE__MANY_REF, false);
 		assertEquals(3, proxies.size());
 
-		assertTrue(((InternalEObject) proxies.basicGet(0)).eIsProxy());
-		assertTrue(((InternalEObject) proxies.basicGet(1)).eIsProxy());
-		assertTrue(((InternalEObject) proxies.basicGet(2)).eIsProxy());
+		assertFalse(((InternalEObject) proxies.basicGet(0)).eIsProxy());
+		assertFalse(((InternalEObject) proxies.basicGet(1)).eIsProxy());
+		assertFalse(((InternalEObject) proxies.basicGet(2)).eIsProxy());
 
 		assertEquals("2", ((Node) proxies.basicGet(0)).getLabel());
 		assertEquals("21", ((Node) proxies.basicGet(1)).getLabel());
@@ -461,7 +461,7 @@ public class TestEmfJsAttributes extends TestSupport {
 
 		assertNotNull(node.getSource());
 
-		assertTrue(node.getSource().eIsProxy());
+		assertFalse(node.getSource().eIsProxy());
 		assertEquals("2121", node.getSource().getLabel());
 
 		Node node2 = (Node) resource.getContents().get(1);
@@ -470,8 +470,8 @@ public class TestEmfJsAttributes extends TestSupport {
 		InternalEList<?> proxies2 = (InternalEList<?>) node2.eGet(ModelPackage.Literals.NODE__MANY_REF, false);
 		assertEquals(2, proxies2.size());
 
-		assertTrue(((InternalEObject) proxies2.basicGet(0)).eIsProxy());
-		assertTrue(((InternalEObject) proxies2.basicGet(1)).eIsProxy());
+		assertFalse(((InternalEObject) proxies2.basicGet(0)).eIsProxy());
+		assertFalse(((InternalEObject) proxies2.basicGet(1)).eIsProxy());
 
 		assertEquals("311", ((Node) proxies2.basicGet(0)).getLabel());
 		assertEquals("3112", ((Node) proxies2.basicGet(1)).getLabel());

@@ -14,6 +14,8 @@ import org.eclipselabs.emfjson.junit.tests.TestEmfJsAnnotations;
 import org.eclipselabs.emfjson.junit.tests.TestEmfJsAttributes;
 import org.eclipselabs.emfjson.junit.tests.TestEmfJsReferences;
 import org.eclipselabs.emfjson.junit.tests.TestPolymorphicType;
+import org.eclipselabs.emfjson.junit.tests.TestUuidDeserialization;
+import org.eclipselabs.emfjson.junit.tests.TestUuidSerialization;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -23,6 +25,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	TestEmfJsReferences.class, 
 	TestEmfJsAttributes.class, 
 	TestPolymorphicType.class, 
-	TestEmfJsAnnotations.class
+	TestEmfJsAnnotations.class,
+	TestUuidSerialization.class,
+	TestUuidDeserialization.class
 })
 public class TestSuite {}
