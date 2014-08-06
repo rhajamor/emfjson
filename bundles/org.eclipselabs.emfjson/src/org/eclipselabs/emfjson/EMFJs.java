@@ -23,5 +23,6 @@ public final class EMFJs {
 	public static final String OPTION_INDENT_OUTPUT = "OPTION_INDENT_OUTPUT";
 	public static final String OPTION_PROXY_ATTRIBUTES = "PROXY_ATTRIBUTES";
 	public static final String OPTION_SERIALIZE_NAMESPACES = "OPTION_SERIALIZE_NAMESPACES";
+	public static final String OPTION_USE_UUID = "OPTION_USE_UUID";
 
 }

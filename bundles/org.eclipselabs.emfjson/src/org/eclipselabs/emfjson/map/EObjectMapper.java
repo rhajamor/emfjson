@@ -17,6 +17,7 @@ import static org.eclipselabs.emfjson.EMFJs.OPTION_ROOT_ELEMENT;
 import static org.eclipselabs.emfjson.EMFJs.OPTION_SERIALIZE_NAMESPACES;
 import static org.eclipselabs.emfjson.EMFJs.OPTION_SERIALIZE_REF_TYPE;
 import static org.eclipselabs.emfjson.EMFJs.OPTION_SERIALIZE_TYPE;
+import static org.eclipselabs.emfjson.EMFJs.OPTION_USE_UUID;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +41,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
+ * EObjectMapper can be used by clients to serialize of deserialize an EObject or 
+ * the content of an existing Resource into a {@link JsonNode}. 
+ * 
  * 
  * @author ghillairet
  * @since 0.6.0
@@ -50,13 +54,14 @@ public class EObjectMapper {
 	private boolean serializeRefTypes = true;
 	private boolean useProxyAttributes = false;
 	private boolean serializeNamespaces = false;
+	private boolean useUUID = false;
 	private boolean indentOutput = false;
+
 	private EClass rootClass = null;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
-	public EObjectMapper() {
-	}
+	public EObjectMapper() {}
 
 	public Object from(InputStream inputStream, Resource resource, Map<?, ?> options) {
 		JsonNode node = null;
@@ -100,10 +105,16 @@ public class EObjectMapper {
 	}
 
 	public EObject from(ObjectNode node, Resource resource) {
+		final Deserializer from = new Deserializer();
+		from.setUseProxyAttributes(useProxyAttributes);
+		from.setUseUUID(useUUID);
+
 		final EList<EObject> contents = resource.getContents();
-		Deserializer from = new Deserializer(useProxyAttributes);
-		EObject result = from.from(node, rootClass, resource);
+		final EObject result = from.from(node, rootClass, resource);
 		if (result != null) {
+			if (!contents.isEmpty()) {
+				contents.clear();
+			}
 			contents.add(result);
 			from.resolve(resource);
 		}
@@ -112,10 +123,15 @@ public class EObjectMapper {
 	}
 
 	public EList<EObject> from(ArrayNode node, Resource resource) {
-		final EList<EObject> contents = resource.getContents();
+		final Deserializer from = new Deserializer();
+		from.setUseProxyAttributes(useProxyAttributes);
+		from.setUseUUID(useUUID);
 
-		Deserializer from = new Deserializer(useProxyAttributes);
-		EList<EObject> result = from.from(node, rootClass, resource);
+		final EList<EObject> contents = resource.getContents();
+		final EList<EObject> result = from.from(node, rootClass, resource);
+		if (!contents.isEmpty()) {
+			contents.clear();
+		}
 		contents.addAll(result);
 		from.resolve(resource);
 
@@ -133,17 +149,21 @@ public class EObjectMapper {
 		return to.to(resource, objectMapper);
 	}
 
+	public ObjectNode to(EObject eObject) {
+		if (eObject == null) throw new IllegalArgumentException("EObject is null");
+		if (eObject.eResource() == null) throw new IllegalArgumentException("EObject must be contained in a Resource");
+
+		return to(eObject, eObject.eResource());
+	}
+
 	public ObjectNode to(EObject eObject, Resource resource) {
 		Serializer to = new Serializer();
 		to.setSerializeNamespaces(serializeNamespaces);
 		to.setSerializeRefTypes(serializeRefTypes);
 		to.setSerializeTypes(serializeTypes);
+		to.setUseUUID(useUUID);
 
 		return to.to(eObject, resource, objectMapper);
-	}
-
-	public ObjectNode to(EObject eObject, Resource resource, Map<?, ?> options) {
-		return to(eObject, resource);
 	}
 
 	public void write(OutputStream outStream, Resource resource, Map<?, ?> options) {
@@ -190,6 +210,7 @@ public class EObjectMapper {
 		boolean serializeRefTypes = true;
 		boolean serializeNamespaces = false;
 		boolean indent = true;
+		boolean useUUID = false;
 
 		if (options.containsKey(OPTION_INDENT_OUTPUT)) {
 			try {
@@ -219,11 +240,19 @@ public class EObjectMapper {
 				e.printStackTrace();
 			}
 		}
+		if (options.containsKey(OPTION_USE_UUID)) {
+			try {
+				useUUID = (Boolean) options.get(OPTION_USE_UUID);
+			} catch (ClassCastException e) {
+				e.printStackTrace();
+			}
+		}
 
 		configure(OPTION_SERIALIZE_TYPE, serializeTypes);
 		configure(OPTION_SERIALIZE_REF_TYPE, serializeRefTypes);
 		configure(OPTION_SERIALIZE_NAMESPACES, serializeNamespaces);
 		configure(OPTION_INDENT_OUTPUT, indent);
+		configure(OPTION_USE_UUID, useUUID);
 	}
 
 	public void configure(String key, Object value) {
@@ -244,6 +273,9 @@ public class EObjectMapper {
 		}
 		if (OPTION_INDENT_OUTPUT.equals(key)) {
 			indentOutput = (Boolean) value;
+		}
+		if (OPTION_USE_UUID.equals(key)) {
+			useUUID = (Boolean) value;
 		}
 	}
 

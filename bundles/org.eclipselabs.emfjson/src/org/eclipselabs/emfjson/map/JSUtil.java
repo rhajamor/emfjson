@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -125,6 +126,9 @@ public class JSUtil {
 
 	public static EClass findEClass(EClass eReferenceType, JsonNode node, JsonNode root, Resource resource, Map<String, String> namespaces) {
 		ResourceSet resourceSet = resource.getResourceSet();
+		if (resourceSet == null) {
+			resourceSet = new ResourceSetImpl();
+		}
 
 		if (eReferenceType.isAbstract()) {
 

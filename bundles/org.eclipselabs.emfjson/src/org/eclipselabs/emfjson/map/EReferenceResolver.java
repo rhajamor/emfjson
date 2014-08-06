@@ -23,6 +23,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -95,11 +97,21 @@ class EReferenceResolver {
 	}
 
 	EObject findEObject(Resource resource, JsonNode node) {
+		ResourceSet resourceSet = resource.getResourceSet();
+		if (resourceSet == null) {
+			resourceSet = new ResourceSetImpl();
+		}
+
 		EObject eObject = null;
 		if (node.isObject()) {
 			URI objectURI = getEObjectURI(node.get(EJS_REF_KEYWORD), resource, deserializer.getNamespaces());
-			eObject = resource.getResourceSet().getEObject(objectURI, false);
+			try {
+				eObject = resourceSet.getEObject(objectURI, true);
+			} catch (Exception e) {
+				eObject = resourceSet.getEObject(objectURI, false);
+			}
 		}
+
 		return eObject;
 	}
 }

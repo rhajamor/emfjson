@@ -23,7 +23,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipselabs.emfjson.common.Constants;
 import org.eclipselabs.emfjson.common.ModelUtil;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,20 +35,21 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 class Deserializer {
 
-	private Map<EObject, JsonNode> processed;
+	boolean useProxyAttributes = false;
+	boolean useUUID = false;
+
 	private EAtttributeDeserializer eAtttributeDeserializer;
 	private EReferenceDeserializer eReferenceDeserializer;
 	private EReferenceResolver resolver;
 	private NamespaceDeserializer namespaceDeserializer;
+
+	private Map<EObject, JsonNode> processed = new HashMap<EObject, JsonNode>();
 	private Map<String, String> namespaces = new HashMap<String, String>();
-	private boolean useProxyAttributes;
+
 	private ProxyFactory proxyFactory;
 
-	Deserializer(boolean useProxyAttributes) {
-		this.processed = new HashMap<EObject, JsonNode>();
-		this.useProxyAttributes = useProxyAttributes;
+	Deserializer() { 
 		this.eAtttributeDeserializer = new EAtttributeDeserializer();
-
 		this.proxyFactory = new ProxyFactory(this);
 		this.eReferenceDeserializer = new EReferenceDeserializer(this);
 		this.resolver = new EReferenceResolver(this);
@@ -54,19 +58,28 @@ class Deserializer {
 
 	EObject from(ObjectNode node, EClass eClass, Resource resource) {
 		EObject eObject = null;
+		ResourceSet resourceSet = resource.getResourceSet();
+		if (resourceSet == null) {
+			resourceSet = new ResourceSetImpl();
+		}
 
 		namespaces.putAll(namespaceDeserializer.deSerialize(node));
 
-		if (eClass == null) {
-			if (node.has(EJS_TYPE_KEYWORD)) {
-				URI eClassURI = ModelUtil.getEObjectURI(node.get(EJS_TYPE_KEYWORD), resource, getNamespaces());
-				eClass = getEClass(eClassURI, resource.getResourceSet());
-			}
+		if (eClass == null && node.has(EJS_TYPE_KEYWORD)) {
+			URI eClassURI = ModelUtil.getEObjectURI(node.get(EJS_TYPE_KEYWORD), resource, getNamespaces());
+			eClass = getEClass(eClassURI, resourceSet);
 		}
 
 		if (eClass != null && eClass instanceof EClass) {
 			eObject = EcoreUtil.create(eClass);
 			getProcessed().put(eObject, node);
+
+			if (useUUID && node.get(Constants.EJS_UUID_ANNOTATION) != null) {
+				String uuid = node.get(Constants.EJS_UUID_ANNOTATION).asText();
+				if (resource instanceof XMLResource) {
+					((XMLResource) resource).setID(eObject, uuid);
+				}
+			}
 
 			eAtttributeDeserializer.deSerialize(eObject, node);
 			eReferenceDeserializer.deSerialize(eObject, node, resource);
@@ -133,8 +146,12 @@ class Deserializer {
 		return processed;
 	}
 
-	boolean useProxyAttributes() {
-		return useProxyAttributes;
+	void setUseProxyAttributes(boolean useProxyAttributes) {
+		this.useProxyAttributes = useProxyAttributes;
+	}
+
+	void setUseUUID(boolean useUUID) {
+		this.useUUID = useUUID;
 	}
 
 }

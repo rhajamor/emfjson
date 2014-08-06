@@ -20,4 +20,5 @@ public final class Constants {
 	public static final String EJS_JSON_ANNOTATION = "JSON";
 	public static final String EJS_ELEMENT_ANNOTATION = "element";
 	public static final String EJS_ROOT_ANNOTATION = "root";
+	public static final String EJS_UUID_ANNOTATION = "_id";
 }

@@ -139,7 +139,7 @@ public class ModelUtil {
      * <pre>
      * example: 
      * {"$ref": "//fragment"} returns resourceURI + #//fragment
-     * {"$ref": "model://fragment"} returns resolve URI against nsMap + #//fragement 
+     * {"$ref": "model://fragment"} returns resolve URI against nsMap + #//fragment 
      * {"$ref": "id"} returns resourceURI + #id
      * </pre>
      * 

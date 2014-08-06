@@ -38,7 +38,7 @@ class ProxyFactory {
 		final EObject proxy = EcoreUtil.create(eClass);
 		((InternalEObject) proxy).eSetProxyURI(objectURI);
 
-		if (deserializer.useProxyAttributes()) {
+		if (deserializer.useProxyAttributes) {
 			JsonNode refNode = JSUtil.getNode(resource, objectURI, eClass);
 
 			if (refNode != null) {

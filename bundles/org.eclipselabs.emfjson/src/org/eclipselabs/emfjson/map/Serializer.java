@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipselabs.emfjson.common.Constants;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,6 +38,7 @@ class Serializer {
 	boolean serializeTypes = true;
 	boolean serializeRefTypes = true;
 	boolean serializeNamespaces = false;
+	boolean useUUID = false;
 
 	private final EAttributeSerializer eAttributeSerializer;
 	private final EReferenceSerializer eReferenceSerializer;
@@ -98,6 +100,9 @@ class Serializer {
 		if (serializeTypes) {
 			target.put(EJS_TYPE_KEYWORD, eClassRef(eObject.eClass()));	
 		}
+		if (useUUID) {
+			target.put(Constants.EJS_UUID_ANNOTATION, EcoreUtil.getURI(eObject).fragment());
+		}
 
 		eAttributeSerializer.serialize(eObject, target);
 		eReferenceSerializer.serialize(eObject, target, resource);
@@ -117,7 +122,11 @@ class Serializer {
 	void setSerializeNamespaces(boolean serializeNamespaces) {
 		this.serializeNamespaces = serializeNamespaces;
 	}
-	
+
+	void setUseUUID(boolean useUUID) {
+		this.useUUID = useUUID;
+	}
+
 	Map<String, String> getNamespaces() {
 		return namespaces;
 	}
